@@ -6,17 +6,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
-public class login extends AppCompatActivity {
+public class sign_up extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-        TextView signUp = findViewById(R.id.sign_up);
+        setContentView(R.layout.activity_sign_up);
 
-        signUp.setOnClickListener(V -> {
-            startActivity(new Intent(this, sign_up.class));
+        TextView login = findViewById(R.id.login);
+        login.setOnClickListener(V -> {
+            startActivity(new Intent(this, login.class));
         });
-
     }
 }
