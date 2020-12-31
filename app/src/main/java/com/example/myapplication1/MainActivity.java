@@ -6,18 +6,27 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity {
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
+public class MainActivity extends AppCompatActivity {
+    FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         TextView next =  findViewById(R.id.nextBtn);
-
+        mAuth = FirebaseAuth.getInstance();
 
         next.setOnClickListener( v -> {
-            Intent moveToLogin = new Intent(getApplicationContext(), login.class);
-            startActivity(moveToLogin);
+
+            FirebaseUser user = mAuth.getCurrentUser();
+            FirebaseAuth.getInstance().signOut();
+            if(user == null) {
+                startActivity(new Intent(MainActivity.this, login.class));
+            } else {
+                startActivity(new Intent(MainActivity.this, lists.class));
+            }
         });
     }
 }
