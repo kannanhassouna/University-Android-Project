@@ -29,7 +29,7 @@
             android:layout_marginTop="25dp"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:text="@string/todo_app"/>
+            android:text="@string/todo_app" />
     </LinearLayout>
 
 

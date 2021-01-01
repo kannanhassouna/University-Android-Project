@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -14,7 +13,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 public class sign_up extends AppCompatActivity {
     private FirebaseAuth mAuth;
@@ -42,14 +40,14 @@ public class sign_up extends AppCompatActivity {
 
     }
 
-    private void signUpFirebase(String email, String password){
+    private void signUpFirebase(String email, String password) {
 
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            startActivity(new Intent(getApplicationContext(), lists.class));
+                            startActivity(new Intent(getApplicationContext(), ListsActivity.class));
                         } else {
                             Toast.makeText(sign_up.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
                         }

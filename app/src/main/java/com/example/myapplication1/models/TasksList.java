@@ -2,13 +2,13 @@ package com.example.myapplication1.models;
 
 import java.util.HashMap;
 
-public class TodoTasks {
+public class TasksList {
 
     private String id;
     private String title;
-    private HashMap<String, TodoTask> tasks = new HashMap<>();
+    private HashMap<String, Task> tasks = new HashMap<>();
 
-    public TodoTasks() {
+    public TasksList() {
 
     }
 
@@ -28,11 +28,11 @@ public class TodoTasks {
         this.title = title;
     }
 
-    public HashMap<String, TodoTask> getTasks() {
+    public HashMap<String, Task> getTasks() {
         return tasks;
     }
 
-    public void setTasks(HashMap<String, TodoTask> tasks) {
+    public void setTasks(HashMap<String, Task> tasks) {
         this.tasks = tasks;
     }
 }

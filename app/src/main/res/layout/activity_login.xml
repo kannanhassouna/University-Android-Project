@@ -65,8 +65,7 @@
             android:textColor="#fff"
             android:textSize="14sp"
             android:fontFamily="@font/montserrat"
-            android:textStyle="bold"
-            />
+            android:textStyle="bold" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/login"
@@ -77,6 +76,7 @@
             android:background="@drawable/button_gradient"
             android:backgroundTint="@color/orange"
             android:text="Login"
+            android:textSize="18sp"
             android:textAllCaps="false"
             android:fontFamily="@font/montserrat"
             android:textStyle="bold"

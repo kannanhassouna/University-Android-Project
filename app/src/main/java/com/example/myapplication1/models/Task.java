@@ -1,6 +1,6 @@
 package com.example.myapplication1.models;
 
-public class TodoTask {
+public class Task {
 
     private String id;
     private String title;
@@ -9,7 +9,8 @@ public class TodoTask {
     private String type = "Personal";
     private long time;
 
-    public TodoTask() { }
+    public Task() {
+    }
 
     public String getId() {
         return id;
