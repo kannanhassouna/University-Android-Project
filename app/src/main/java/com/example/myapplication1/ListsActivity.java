@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -30,8 +32,9 @@ public class ListsActivity extends AppCompatActivity {
 
     private ListsAdapter listsAdapter;
     private RecyclerView listRecyclerView;
-    private java.util.List todoLists = new ArrayList<>();
-    private java.util.List searchedToDoList = new ArrayList<>();
+    private java.util.List<TasksList> todoLists = new ArrayList<>();
+    private java.util.List<TasksList> searchedToDoList = new ArrayList<>();
+    private EditText search;
     private FirebaseAuth mAuth;
     private FirebaseUser user;
 
@@ -41,6 +44,7 @@ public class ListsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_lists);
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
+        search = findViewById(R.id.list_search);
         findViewById(R.id.back).setOnClickListener(V -> onBackPressed());
         findViewById(R.id.create_list).setOnClickListener(V -> showNewListDialog());
         findViewById(R.id.logout).setVisibility(View.VISIBLE);
@@ -48,11 +52,37 @@ public class ListsActivity extends AppCompatActivity {
         listRecyclerView = findViewById(R.id.lists_recycler_view);
 
         listsAdapter = new ListsAdapter(this, todoLists);
+
         listRecyclerView.setAdapter(listsAdapter);
         listRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        //      Firebase  Snapshot
+        search.addTextChangedListener(new TextWatcher() {
 
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String query = search.getText().toString();
+                searchedToDoList.clear();
+                for (int j = 0; j < todoLists.size(); j++) {
+                    if (todoLists.get(j).getTitle().contains(query)) {
+                        searchedToDoList.add(todoLists.get(j));
+                    }
+                }
+                listsAdapter = new ListsAdapter(search.getContext(), searchedToDoList);
+                listRecyclerView.setAdapter(listsAdapter);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        //      Firebase  Snapshot
         if(user != null)
         FirebaseDatabase.getInstance().getReference("Users").child(user.getUid()).child("lists").addValueEventListener(new ValueEventListener() {
             @Override
@@ -72,6 +102,8 @@ public class ListsActivity extends AppCompatActivity {
             }
         });
     }
+
+
 
     private void showNewListDialog() {
         final EditText listEditText = new EditText(this);
