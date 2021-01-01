@@ -43,7 +43,9 @@
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:fontFamily="@font/montserrat"
+        />
 
     <ImageView
         android:id="@+id/search"
@@ -53,7 +55,9 @@
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:fontFamily="@font/montserrat_regular"
+        />
 
     <TextView
         android:id="@+id/save"
@@ -61,6 +65,7 @@
         android:layout_height="wrap_content"
         android:padding="4dp"
         android:text="Save"
+        android:fontFamily="@font/montserrat_regular"
         android:textColor="@color/white"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"

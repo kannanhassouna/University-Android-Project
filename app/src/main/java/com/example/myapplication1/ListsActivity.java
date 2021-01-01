@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 
 import com.example.myapplication1.models.Task;
 import com.example.myapplication1.models.TasksList;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,14 +25,18 @@ public class ListsActivity extends AppCompatActivity {
     private RecyclerView listRecyclerView;
     private java.util.List todoLists = new ArrayList<>();
     private java.util.List searchedToDoList = new ArrayList<>();
-
+    private FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lists);
+        mAuth = FirebaseAuth.getInstance();
         findViewById(R.id.back).setOnClickListener(V -> onBackPressed());
         findViewById(R.id.create_list).setOnClickListener(V -> showNewListDialog());
+        findViewById(R.id.logout).setVisibility(View.VISIBLE);
+        findViewById(R.id.logout).setOnClickListener(V -> logout());
         listRecyclerView = findViewById(R.id.lists_recycler_view);
+
         TasksList todoTasksList = new TasksList();
         todoTasksList.setTitle("ahmed");
         Task todo = new Task();
@@ -62,5 +68,8 @@ public class ListsActivity extends AppCompatActivity {
         });
     }
 
-
+    private void logout(){
+        mAuth.getInstance().signOut();
+        startActivity(new Intent(this, login.class));
+    }
 }
