@@ -12,6 +12,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication1.models.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
 import java.util.List;
@@ -19,12 +22,15 @@ import java.util.List;
 public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder> {
     private Context ctx;
     private List<Task> list;
-    private String todoListTitle;
-
-    TasksAdapter(Context ctx, List<Task> list, String title) {
+    private String todoListID;
+    private FirebaseUser user;
+    private FirebaseAuth mAuth;
+    TasksAdapter(Context ctx, List<Task> list, String todoListID) {
+        mAuth = FirebaseAuth.getInstance();
+        user = mAuth.getCurrentUser();
         this.ctx = ctx;
         this.list = list;
-        todoListTitle = title;
+        this.todoListID = todoListID;
     }
 
 
@@ -45,15 +51,21 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder> 
             holder.title.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
         }
 
+        holder.delete.setOnClickListener(V -> {
+            FirebaseDatabase.getInstance().getReference("Users").child(user.getUid()).child("lists").child(this.todoListID).child("tasks").child(todo.getId()).removeValue();
+
+        });
+
         holder.checkedIcon.setOnClickListener(V -> {
             if(todo.isChecked()) {
                 holder.checkedIcon.setImageResource(R.drawable.checkbox_unchecked);
                 holder.title.setPaintFlags(holder.title.getPaintFlags() & ~Paint.STRIKE_THRU_TEXT_FLAG);
-
+                FirebaseDatabase.getInstance().getReference("Users").child(user.getUid()).child("lists").child(this.todoListID).child("tasks").child(todo.getId()).child("checked").setValue(false);
                 todo.setChecked(false);
             } else {
                 holder.checkedIcon.setImageResource(R.drawable.checkbox_checked);
                 holder.title.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+                FirebaseDatabase.getInstance().getReference("Users").child(user.getUid()).child("lists").child(this.todoListID).child("tasks").child(todo.getId()).child("checked").setValue(true);
                 todo.setChecked(true);
             }
         });
@@ -66,10 +78,13 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder> 
 
     class ViewHolder extends RecyclerView.ViewHolder {
         TextView title;
+        TextView delete;
         ImageView checkedIcon;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.name);
+            delete = itemView.findViewById(R.id.delete);
             checkedIcon = itemView.findViewById(R.id.check_image);
 
         }

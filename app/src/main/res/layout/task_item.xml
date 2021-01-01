@@ -38,10 +38,10 @@
         android:fontFamily="@font/montserrat_regular" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/type"
+        android:id="@+id/delete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Edit"
+        android:text="Delete"
         android:textAllCaps="false"
         android:textColor="@color/black"
         android:textSize="16sp"

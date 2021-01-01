@@ -59,7 +59,9 @@ public class ListsActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 todoLists.clear();
                 for(DataSnapshot snapShot: dataSnapshot.getChildren()) {
-                    todoLists.add(snapShot.getValue(TasksList.class));
+                    TasksList tasksList = snapShot.getValue(TasksList.class);
+                    tasksList.setId(snapShot.getKey());
+                    todoLists.add(tasksList);
                 }
                 listsAdapter.notifyDataSetChanged();
             }
@@ -86,7 +88,7 @@ public class ListsActivity extends AppCompatActivity {
                 dialog.dismiss();
                 String uid = mAuth.getCurrentUser().getUid();
                 HashMap<String, Object> data = new HashMap<>();
-                HashMap<String, Task> list = new HashMap<String, Task>();
+                HashMap<String, Task> list = new HashMap<>();
                 data.put("tasks", list);
                 data.put("title", listEditText.getText().toString());
                 FirebaseDatabase.getInstance().getReference("Users").child(uid).child("lists").push().setValue(data);

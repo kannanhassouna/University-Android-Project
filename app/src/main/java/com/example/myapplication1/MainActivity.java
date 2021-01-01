@@ -20,9 +20,7 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         next.setOnClickListener(v -> {
-
             FirebaseUser user = mAuth.getCurrentUser();
-            FirebaseAuth.getInstance().signOut();
             if (user == null) {
                 startActivity(new Intent(MainActivity.this, login.class));
             } else {

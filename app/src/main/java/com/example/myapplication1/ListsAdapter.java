@@ -40,7 +40,6 @@ public class ListsAdapter extends RecyclerView.Adapter<ListsAdapter.ViewHolder> 
                 intent.putExtra("TODO_LIST_ID", list.get(getAdapterPosition()).getId());
                 intent.putExtra("TODO_LIST_TITLE", list.get(getAdapterPosition()).getTitle());
                 ctx.startActivity(intent);
-
             });
         }
     }
