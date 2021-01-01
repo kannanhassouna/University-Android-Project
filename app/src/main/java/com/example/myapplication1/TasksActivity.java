@@ -3,6 +3,7 @@ package com.example.myapplication1;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,11 +22,13 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class TasksActivity extends AppCompatActivity {
+public class TasksActivity extends AppCompatActivity  implements View.OnClickListener{
     RecyclerView recyclerView;
     FirebaseUser user;
     FirebaseAuth mAuth;
@@ -105,5 +108,11 @@ public class TasksActivity extends AppCompatActivity {
         String key = FirebaseDatabase.getInstance().getReference("Users").child(user.getUid()).child("lists").child(listId).child("tasks").push().getKey();
         task.setId(key);
         FirebaseDatabase.getInstance().getReference("Users").child(user.getUid()).child("lists").child(listId).child("tasks").child(key).setValue(task);
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(v.getId() == R.id.accelerate) {
+        }
     }
 }

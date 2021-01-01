@@ -1,6 +1,7 @@
 package com.example.myapplication1;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Paint;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication1.models.Task;
@@ -55,6 +57,12 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder> 
             holder.title.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
         }
 
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(ctx, task_view.class);
+            intent.putExtra("TASK_ID", list.get(position).getId());
+            intent.putExtra("LIST_ID", todoListID);
+            ctx.startActivity(intent);
+        });
 
         holder.delete.setOnClickListener(V -> {
             FirebaseDatabase.getInstance().getReference("Users").child(user.getUid()).child("lists").child(this.todoListID).child("tasks").child(todo.getId()).removeValue();
@@ -85,21 +93,15 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder> 
         TextView title;
         TextView delete;
         ImageView checkedIcon;
+        ConstraintLayout taskItem;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.name);
             delete = itemView.findViewById(R.id.delete);
             checkedIcon = itemView.findViewById(R.id.check_image);
-            itemView.setOnClickListener(v -> {
-                BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(
-                        ctx, R.style.BottomSheetDialogTheme
-                );
-                View bottomSheetView = LayoutInflater.from(ctx).inflate(R.layout.task_view, (LinearLayout) itemView);
-//                bottomSheetView.findViewById(R.id)
-                bottomSheetDialog.setContentView(bottomSheetView);
-                bottomSheetDialog.show();
-            });
+            taskItem = itemView.findViewById(R.id.task_item);
+
         }
 
     }
