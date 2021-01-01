@@ -2,16 +2,20 @@ package com.example.myapplication1;
 
 import android.content.Context;
 import android.graphics.Paint;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication1.models.Task;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
@@ -51,6 +55,7 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder> 
             holder.title.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
         }
 
+
         holder.delete.setOnClickListener(V -> {
             FirebaseDatabase.getInstance().getReference("Users").child(user.getUid()).child("lists").child(this.todoListID).child("tasks").child(todo.getId()).removeValue();
 
@@ -76,7 +81,7 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder> 
         return list.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder  {
         TextView title;
         TextView delete;
         ImageView checkedIcon;
@@ -86,7 +91,16 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder> 
             title = itemView.findViewById(R.id.name);
             delete = itemView.findViewById(R.id.delete);
             checkedIcon = itemView.findViewById(R.id.check_image);
-
+            itemView.setOnClickListener(v -> {
+                BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(
+                        ctx, R.style.BottomSheetDialogTheme
+                );
+                View bottomSheetView = LayoutInflater.from(ctx).inflate(R.layout.task_view, (LinearLayout) itemView);
+//                bottomSheetView.findViewById(R.id)
+                bottomSheetDialog.setContentView(bottomSheetView);
+                bottomSheetDialog.show();
+            });
         }
+
     }
 }
