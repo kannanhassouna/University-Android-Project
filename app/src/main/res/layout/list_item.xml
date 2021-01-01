@@ -9,6 +9,7 @@
     android:background="@drawable/rounded_text"
     android:backgroundTint="@color/white"
     android:paddingHorizontal="16dp"
+    android:minHeight="70dp"
     android:paddingVertical="12dp">
 
 

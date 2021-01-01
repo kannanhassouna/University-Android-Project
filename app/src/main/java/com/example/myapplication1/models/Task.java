@@ -6,11 +6,6 @@ public class Task {
     private String title;
     private boolean isChecked;
     private String description;
-    private String type = "Personal";
-    private long time;
-
-    public Task() {
-    }
 
     public String getId() {
         return id;
@@ -42,21 +37,5 @@ public class Task {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public long getTime() {
-        return time;
-    }
-
-    public void setTime(long time) {
-        this.time = time;
     }
 }

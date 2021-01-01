@@ -74,7 +74,6 @@
             android:layout_marginTop="56dp"
             android:foreground="?selectableItemBackground"
             android:background="@drawable/button_gradient"
-            android:backgroundTint="@color/orange"
             android:text="Login"
             android:textSize="18sp"
             android:textAllCaps="false"
